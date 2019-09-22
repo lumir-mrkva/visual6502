@@ -21,7 +21,7 @@
 */
 
 body {
- background: white;
+ background: black;
  color: black;
 /* font-family: cursive;*/
  font-family :Verdana, Arial, Helvetica, Sans-Serif;
@@ -29,6 +29,7 @@ body {
 }
 
 div.frame {
+ display: none;
  margin-left: 10px;
  position: relative;
  width: 1150px;
@@ -36,18 +37,11 @@ div.frame {
 }
 
 div.chip {
- background: lightgray;
- border: 2px solid gray;
- position: absolute;
- width: 800px;
- height: 600px;
  overflow: hidden;
 }
 
 canvas.chip {
  position: absolute;
- width: 600px;
- height: 600px;
 }
 
 div.buttons{

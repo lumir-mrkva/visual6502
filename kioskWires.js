@@ -45,9 +45,15 @@ var userResetHigh;
 //   rounding artifacts, and at high zoom there will be anti-aliasing on edges.
 var grMaxZoom=12;
 var grChipSize=10000;
-var grChipOffsetX=400;
 var grChipOffsetY=0;
-var grCanvasSize=2000;
+
+var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+var grCanvasSize=Math.min(w,h);
+if(h>w) grCanvasSize += grCanvasSize/10
+var grChipOffsetX=0;
+// var grChipSize=grCanvasSize*4;
 var grLineWidth=1;
 
 // Index of layerNames corresponds to index into drawLayers
@@ -107,8 +113,6 @@ function handleKey(e){
 	var c = e.charCode || e.keyCode;
 	c = String.fromCharCode(c);
 	if('zx<>?np'.indexOf(c)==-1) return;
-	if((c=='x' || c=='<') && zoom>1) setZoom(zoom/1.2);
-	else if((c=='z' || c=='>') && zoom<grMaxZoom) setZoom(zoom*1.2);
 	else if(c=='?') setZoom(1);
 	else if(c=='n') stepForward();
 	else if(c=='p') stepBack();
@@ -155,12 +159,13 @@ function setZoom(n){
 }
 
 function recenter(){
-	var top = -centery*zoom+300;
-	top = Math.min(top, 0);
-	top = Math.max(top, -600*(zoom-1));
-	var left = -centerx*zoom+400;
-	left = Math.min(left, 0);
-	left = Math.max(left, (zoom==1)?100:-600*zoom+800);
+	var top = 0;
+	var left = 0;
+	if (w > grCanvasSize) {
+		left = w/2 - (grCanvasSize - grCanvasSize/10)/2;
+	} else {
+		top = h/2 - grCanvasSize/2;
+	}
 	setChipStyle({
 		top: top+'px',
 		left: left+'px',
